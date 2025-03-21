@@ -1,6 +1,6 @@
 import './GenreSelect.css';
 
-interface GenreSelectProps {
+export interface GenreSelectProps {
     genre: string[];
     selectedGenre: string;
     onSelect: (genre: string) => void; 
