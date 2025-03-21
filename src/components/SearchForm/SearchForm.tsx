@@ -22,7 +22,7 @@ function SearchForm(props: SearchFormProps) {
             type="text" 
             defaultValue={searchQuery} 
             placeholder="What do you want to watch?" />
-        <button type="submit">Search</button>
+        <button test-id="search-btn" type="submit">Search</button>
     </form>
   )
 }
