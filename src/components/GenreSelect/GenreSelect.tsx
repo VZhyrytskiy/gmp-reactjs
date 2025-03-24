@@ -18,10 +18,10 @@ function GenreSelect(props: GenreSelectProps) {
     };
 
     return (
-        <section className="genre-select-container">
+        <section className="flex gap-8 bg-gray w-full text-white uppercase">
             {genre.map((genre) => {
                 return (<a
-                    className={`genre-item ${isSelectedGenre(genre)}`}
+                    className={`${isSelectedGenre(genre)} text-base font-medium cursor-pointer`}
                     key={genre} 
                     onClick={() => onSelectGenre(genre)}>{genre}
                 </a>)

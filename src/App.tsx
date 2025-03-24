@@ -1,13 +1,30 @@
 import { useState } from 'react';
 import './App.css'
-import Counter from './components/Counter/Counter';
 import GenreSelect from './components/GenreSelect/GenreSelect';
 import SearchForm from './components/SearchForm/SearchForm'
+import MovieTile, { Movie } from './components/MovieTile/MovieTile';
+import MovieDetails from './components/MovieDetails/MovieDetails';
+import { SortControl } from './components/SortControl/SortControl';
 
 const genre = ['all', 'documentary', 'comedy', 'horror', 'crime'];
 
+const movie: Movie = {
+      "id": 337167,
+      "title": "Fifty Shades Freed",
+      "release_date": "2018-02-07",
+      "poster_path": "https://image.tmdb.org/t/p/w500/3kcEGnYBHDeqmdYf8ZRbKdfmlUy.jpg",
+      "genres": [
+          "Drama",
+          "Romance"
+      ],
+      "vote_average": 8.9,
+      "overview": "Believing they have left behind shadowy figures from their past, newlyweds Christian and Ana fully embrace an inextricable connection and shared life of luxury. But just as she steps into her role as Mrs. Grey and he relaxes into an unfamiliar stability, new threats could jeopardize their happy ending before it even begins.",
+      "runtime": 106
+}
+
 function App() {
   const [selectedGenre, setSelectedGenre] = useState('all');
+  const [sortBy, setSortBy] = useState('RELEASE DATE');
 
   const onSearch = (searchQuery: string) => {
     console.log(searchQuery)
@@ -18,11 +35,26 @@ function App() {
     setSelectedGenre(genre);
   };
 
+  const callback = () => {
+    console.log('Movie clicked');
+  };
+
+  const onOrder = (order: string) => {
+    setSortBy(order);
+    console.log(order);
+  };  
+
   return (
     <>
-      <Counter />
       <SearchForm searchQuery='' onSearch={onSearch}/>
-      <GenreSelect genre={genre} selectedGenre={selectedGenre} onSelect={onSelect}/>
+      <div className='flex flex-row justify-between'>
+        <GenreSelect genre={genre} selectedGenre={selectedGenre} onSelect={onSelect}/>
+        <SortControl currentSelection={sortBy} onSelectionChange={onOrder}/>
+      </div> 
+      {/* <MovieTile movie={movie} callback={callback}/> */}
+      <MovieDetails movie={movie} />
+
+
     </>
   )
 }
