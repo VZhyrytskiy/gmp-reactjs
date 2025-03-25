@@ -4,14 +4,14 @@ export interface MovieDetailsProps {
     movie: Movie;
 }
 
+const getHoursAndMinutes = (runtime: number) => {
+    const hours = Math.floor(runtime / 60);
+    const minutes = runtime % 60;
+    return `${hours}h ${minutes}min`;
+};
+
 function MovieDetails(props: MovieDetailsProps) {
     const { poster_path, title, release_date, genres, vote_average, overview, runtime } = props.movie;
-
-    const getHoursAndMinutes = (runtime: number) => {
-        const hours = Math.floor(runtime / 60);
-        const minutes = runtime % 60;
-        return `${hours}h ${minutes}min`;
-    };
 
     return (
         <div className="w-full bg-gray text-white flex gap-4">
