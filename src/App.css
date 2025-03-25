@@ -1,0 +1,10 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+@theme {
+    --color-red-accent: #f65261;
+    --color-gray: #424242;
+    --color-dark-gray: #232323;
+    --color-light-gray: #555555;
+    --color-lighter-gray: #979797;
+  }

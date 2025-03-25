@@ -1,4 +1,4 @@
-interface SearchFormProps {
+export interface SearchFormProps {
     searchQuery: string;
     onSearch: (searchQuery: string) => void;
 }
