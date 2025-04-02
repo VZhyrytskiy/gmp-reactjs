@@ -1,13 +1,14 @@
 import './../../App.css';
 import MovieDetails, { MovieDetailsProps } from './MovieDetails';
+import { Meta, StoryFn } from "@storybook/react";
 
 export default {
   title: "Movies/MovieDetails",  
   component: MovieDetails,       
-};
+} as Meta;
 
 // Template for the story
-const Template = (args: MovieDetailsProps) => <MovieDetails {...args} />;
+const Template: StoryFn<MovieDetailsProps> = (args: MovieDetailsProps) => <MovieDetails {...args} />;
 
 export const Default = {
     render: Template,
