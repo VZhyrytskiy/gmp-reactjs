@@ -1,13 +1,18 @@
 import GenreSelect, { GenreSelectProps } from "./GenreSelect";
 import { action } from "@storybook/addon-actions";
+import { Meta, StoryFn } from "@storybook/react";
 import "./GenreSelect.css"; 
 
 export default {
     title: "Movies/GenreSelect",    
-    component: GenreSelect,         
-};
+    component: GenreSelect,  
+    argTypes: {
+        title: { control: "text" },
+        onClose: { action: "closed" },
+    },       
+} as Meta;
 
-const Template = (args: GenreSelectProps) => <GenreSelect {...args} />;
+const Template: StoryFn<GenreSelectProps> = (args: GenreSelectProps) => <GenreSelect {...args} />;
 
 export const NoSelectedGenre = {
     render: Template,

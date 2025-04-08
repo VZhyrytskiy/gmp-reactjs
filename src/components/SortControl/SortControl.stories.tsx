@@ -1,14 +1,15 @@
 import { action } from "@storybook/addon-actions";
 import { useState } from "react";
 import { SortControl, SortControlProps } from "./SortControl";
+import { Meta, StoryFn } from "@storybook/react";
 import "./../../App.css";
 
 export default {
   title: "Movies/SortControl",
   component: SortControl,
-};
+} as Meta;
 
-const Template = (args: SortControlProps) => {
+const Template: StoryFn<SortControlProps> = (args: SortControlProps) => {
   const [currentSelection, setCurrentSelection] = useState(args.currentSelection);
 
   const handleSelectionChange = (newValue: string) => {
