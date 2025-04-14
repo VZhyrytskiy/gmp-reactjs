@@ -18,12 +18,12 @@ export function SortControl(props: SortControlProps) {
 
             {/* SELECT */}
             <select
-                value={currentSelection}
+                defaultValue={currentSelection}
                 onChange={handleChange}
                 className="select select-sm select-bordered bg-gray text-white max-w-[200px]">
 
-                <option value="RELEASE DATE" className="uppercase">RELEASE DATE</option>
-                <option value="TITLE" className="uppercase">TITLE</option>
+                <option value="release_date" className="uppercase">RELEASE DATE</option>
+                <option value="title" className="uppercase">TITLE</option>
             </select>
         </div>
     );

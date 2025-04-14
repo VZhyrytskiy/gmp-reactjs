@@ -18,7 +18,7 @@ function GenreSelect(props: GenreSelectProps) {
     };
 
     return (
-        <section className="flex gap-8 bg-gray w-full text-white uppercase">
+        <section className="flex gap-8 bg-gray w-full text-white uppercase p-4">
             {genre.map((genre) => {
                 return (<a
                     className={`${isSelectedGenre(genre)} text-base font-medium cursor-pointer`}
