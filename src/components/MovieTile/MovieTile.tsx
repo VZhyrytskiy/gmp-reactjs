@@ -19,12 +19,12 @@ function MovieTile(props: MovieTileProps) {
     };
 
     return (
-        <div className="w-[322px] bg-gray relative text-white">
+        <div className="w-[322px] bg-gray relative text-white pt-8">
             {/* POSTER */}
             <img src={poster_path} alt={title} onClick={callback} className="min-w-[322px] min-h-[455px] cursor-pointer" />
             
             {/* POPUP MENU */}
-            <details ref={detailsRef} className="dropdown absolute top-2 right-2">
+            <details ref={detailsRef} className="dropdown absolute top-9 right-2">
                 <summary className="btn rounded-full w-9 h-9 cursor-pointer bg-gray border-none text-white">
                     <div className="text-center rotate-90 translate-x-1/3 cursor-pointer">...</div>
                 </summary>

@@ -2,6 +2,7 @@ import { Movie } from "../../models/Movie";
 
 export interface MovieDetailsProps {
     movie: Movie;
+    onSearch: () => void;
 }
 
 const getHoursAndMinutes = (runtime: number) => {
@@ -11,10 +12,11 @@ const getHoursAndMinutes = (runtime: number) => {
 };
 
 function MovieDetails(props: MovieDetailsProps) {
+    const { onSearch } = props;
     const { poster_path, title, release_date, genres, vote_average, overview, runtime } = props.movie;
 
     return (
-        <div className="w-full bg-gray text-white flex gap-4">
+        <div className="w-full bg-gray text-white flex gap-8 p-4">
             {/* LEFT SIDE */}
             <div className="w-[322px] bg-gray relative text-white">
                 {/* POSTER */}
@@ -27,6 +29,13 @@ function MovieDetails(props: MovieDetailsProps) {
                 <div className="mt-4 flex gap-8">
                     <h2 className="text-5xl font-medium opacity-70">{title}</h2>
                     <div className="flex items-center justify-center text-xl font-medium opacity-70 ml-4 rounded-full border-white border w-[60px] h-[60px]">{vote_average}</div>
+                    {/* BACK BUTTON */}
+                    <button 
+                        type="submit" 
+                        onClick={onSearch}
+                        className="text-lg cursor-pointer w-[100px] bg-red-accent rounded uppercase mt-8">
+                            Search
+                    </button>
                 </div>
 
                 {/* GENRES */}
@@ -44,7 +53,7 @@ function MovieDetails(props: MovieDetailsProps) {
                 <div className="mt-4 opacity-70">
                     {overview}
                 </div>
-
+                
             </div>
         </div>
         
