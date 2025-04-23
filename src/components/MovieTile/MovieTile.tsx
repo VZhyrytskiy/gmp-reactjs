@@ -1,14 +1,16 @@
 import { useRef } from "react";
 import { Movie } from "../../models/Movie";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 export interface MovieTileProps {
     movie: Movie;
-    callback: () => void;
 }
 
 function MovieTile(props: MovieTileProps) {
-    const {callback, movie: {poster_path, title, release_date, genres}} = props;
+    const {movie: {poster_path, title, release_date, genres, id}} = props;
 
+    const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
     const detailsRef = useRef<HTMLDetailsElement>(null);
 
     const closeDropdown = (message: string ) => () => {
@@ -18,10 +20,14 @@ function MovieTile(props: MovieTileProps) {
         }
     };
 
+    const handleClick = () => {
+        navigate(`/${id}`, { state: { searchParams: searchParams.toString() } });
+    };
+
     return (
         <div className="w-[322px] bg-gray relative text-white pt-8">
             {/* POSTER */}
-            <img src={poster_path} alt={title} onClick={callback} className="min-w-[322px] min-h-[455px] cursor-pointer" />
+            <img src={poster_path} alt={title} onClick={handleClick} className="min-w-[322px] min-h-[455px] cursor-pointer" />
             
             {/* POPUP MENU */}
             <details ref={detailsRef} className="dropdown absolute top-9 right-2">

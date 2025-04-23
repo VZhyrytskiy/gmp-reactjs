@@ -1,5 +1,6 @@
 import { Meta, StoryFn } from "@storybook/react";
 import MovieTile, { MovieTileProps } from "./MovieTile";
+import { MemoryRouter } from "react-router-dom";
 import './../../App.css';
 
 export default {
@@ -8,7 +9,11 @@ export default {
 } as Meta;
 
 // Template for the story
-const Template: StoryFn<MovieTileProps> = (args: MovieTileProps) => <MovieTile {...args} />;
+const Template: StoryFn<MovieTileProps> = (args: MovieTileProps) => (
+    <MemoryRouter>
+      <MovieTile {...args} />
+    </MemoryRouter>
+  );
 
 // Story with an empty field
 export const Default = {
@@ -24,7 +29,6 @@ export const Default = {
                 "Romance"
             ],
         },
-        callback: () => console.log("Callback")
     },
   };
 

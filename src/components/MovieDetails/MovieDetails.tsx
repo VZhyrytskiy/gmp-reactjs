@@ -2,7 +2,6 @@ import { Movie } from "../../models/Movie";
 
 export interface MovieDetailsProps {
     movie: Movie;
-    onSearch: () => void;
 }
 
 const getHoursAndMinutes = (runtime: number) => {
@@ -12,8 +11,13 @@ const getHoursAndMinutes = (runtime: number) => {
 };
 
 function MovieDetails(props: MovieDetailsProps) {
-    const { onSearch } = props;
     const { poster_path, title, release_date, genres, vote_average, overview, runtime } = props.movie;
+
+    const onSearch = () => {
+        // redirect back to the main page and preserve query params
+        const params = new URLSearchParams(window.location.search);
+        window.location.href = `/?${params.toString()}`;
+    }
 
     return (
         <div className="w-full bg-gray text-white flex gap-8 p-4">
@@ -56,8 +60,6 @@ function MovieDetails(props: MovieDetailsProps) {
                 
             </div>
         </div>
-        
-        
     )
 }
 

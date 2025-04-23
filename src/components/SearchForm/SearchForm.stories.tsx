@@ -1,28 +1,34 @@
-import SearchForm, { SearchFormProps } from "./SearchForm";
-import { action } from "@storybook/addon-actions";
+import SearchForm from "./SearchForm";
 import { Meta, StoryFn } from "@storybook/react";
+import { MemoryRouter } from "react-router-dom";
 
 export default {
     title: "Movies/SearchForm",     // Component name in Storybook
     component: SearchForm,          // Component for which the story is created
 } as Meta;
 
-const Template: StoryFn<SearchFormProps> = (args: SearchFormProps) => <SearchForm {...args} />;
+const Template: StoryFn = (args, { initialPath }) => (
+    <MemoryRouter
+        initialEntries={[
+            initialPath || "/?query=", 
+        ]}
+    >
+        <SearchForm />
+    </MemoryRouter>
+);
 
 // Story with an empty field
 export const EmptyForm = {
     render: Template,
-    args: {
-        searchQuery: "",
-        onSearch: action("Search submitted"), // Action for the button
+    parameters: {
+        initialPath: "/?query=", 
     },
 };
 
 // Story with a pre-filled field
 export const PreFilledForm = {
     render: Template,
-    args: {
-        searchQuery: "React.js",
-        onSearch: action("Search submitted"),
-    }
+    parameters: {
+        initialPath: "/?query=React.js", 
+    },
 };

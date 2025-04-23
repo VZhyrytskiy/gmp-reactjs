@@ -1,16 +1,36 @@
 import { render, screen, fireEvent } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
 import MovieTile, { MovieTileProps } from "./MovieTile";
 import { describe, it, vi, expect } from "vitest";
-import { mockCallback, mockMovie } from "../../mock-data";
+import { mockMovie } from "../../mock-data";
+
+const navigateSpy = vi.fn();
+
+vi.mock("react-router-dom", async () => {
+  const actual = await vi.importActual("react-router-dom"); // Импортируем все оригинальные фичи react-router-dom
+  return {
+    ...actual,
+    useNavigate: () => navigateSpy, // Заменяем useNavigate на мок
+  };
+});
+
+
 
 describe("MovieTile Component", () => {
   const defaultProps: MovieTileProps = {
     movie: mockMovie,
-    callback: mockCallback,
   };
 
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
   it("renders movie poster, title, release date, and genres", () => {
-    render(<MovieTile {...defaultProps} />);
+    render(
+      <MemoryRouter>
+        <MovieTile {...defaultProps} />
+      </MemoryRouter>
+    );
 
     // chaeck if the poster is rendered
     const poster = screen.getByAltText(mockMovie.title);
@@ -30,17 +50,28 @@ describe("MovieTile Component", () => {
     expect(genres).toBeInTheDocument();
   });
 
-  it("calls callback when poster is clicked", () => {
-    render(<MovieTile {...defaultProps} />);
+  it("navigates to the correct path when poster is clicked", () => {
+    render(
+      <MemoryRouter>
+        <MovieTile {...defaultProps} />
+      </MemoryRouter>
+    );
 
     const poster = screen.getByAltText(mockMovie.title);
     fireEvent.click(poster);
 
-    expect(mockCallback).toHaveBeenCalledTimes(1);
+    expect(navigateSpy).toHaveBeenCalledTimes(1);
+    expect(navigateSpy).toHaveBeenCalledWith(`/${mockMovie.id}`, {
+      state: { searchParams: "" }, 
+    });
   });
 
   it("opens and closes the dropdown menu", () => {
-    render(<MovieTile {...defaultProps} />);
+    render(
+      <MemoryRouter>
+        <MovieTile {...defaultProps} />
+      </MemoryRouter>
+    );
 
     const dropdownButton = screen.getByText("...");
     const dropdownDetails = screen.getByRole("group", { hidden: true });
@@ -59,7 +90,11 @@ describe("MovieTile Component", () => {
   });
 
   it("calls closeDropdown with the correct message", () => {
-    render(<MovieTile {...defaultProps} />);
+    render(
+      <MemoryRouter>
+        <MovieTile {...defaultProps} />
+      </MemoryRouter>
+    );
 
     // click on the "edit" button
     const editButton = screen.getByText("edit");
