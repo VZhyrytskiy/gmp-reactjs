@@ -6,9 +6,13 @@ import { mockOnSelectionChange } from "../../mock-data";
 describe("SortControl Component", () => {
 
   const defaultProps: SortControlProps = {
-    currentSelection: "RELEASE DATE",
+    currentSelection: "release_date",
     onSelectionChange: mockOnSelectionChange,
   };
+
+  beforeEach(() => {
+    mockOnSelectionChange.mockClear();
+  });
 
   it("renders correctly with the current selection", () => {
     render(<SortControl {...defaultProps} />);
@@ -20,13 +24,15 @@ describe("SortControl Component", () => {
     // check if the select is rendered with the correct value
     const select = screen.getByRole("combobox");
     expect(select).toBeInTheDocument();
-    expect(select).toHaveValue("RELEASE DATE");
+    expect(select).toHaveValue("release_date");
 
     // check if the options are rendered
     const options = screen.getAllByRole("option");
     expect(options).toHaveLength(2);
-    expect(options[0]).toHaveTextContent("RELEASE DATE");
+    expect(options[0]).toHaveTextContent("RELEASE DATE"); 
+    expect(options[0]).toHaveValue("release_date"); 
     expect(options[1]).toHaveTextContent("TITLE");
+    expect(options[1]).toHaveValue("title");
   });
 
   it("calls onSelectionChange when the selection changes", () => {
@@ -35,16 +41,16 @@ describe("SortControl Component", () => {
     const select = screen.getByRole("combobox");
 
     // change the value of the <select>
-    fireEvent.change(select, { target: { value: "TITLE" } });
+    fireEvent.change(select, { target: { value: "title" } });
 
     // check if `onSelectionChange` was called with the new value
     expect(mockOnSelectionChange).toHaveBeenCalledTimes(1);
-    expect(mockOnSelectionChange).toHaveBeenCalledWith("TITLE");
+    expect(mockOnSelectionChange).toHaveBeenCalledWith("title");
   });
 
   it("renders with a different initial selection", () => {
     const props: SortControlProps = {
-      currentSelection: "TITLE",
+      currentSelection: "title",
       onSelectionChange: mockOnSelectionChange,
     };
 
@@ -52,6 +58,6 @@ describe("SortControl Component", () => {
 
     // Check that the value of `<select>` matches `currentSelection`
     const select = screen.getByRole("combobox");
-    expect(select).toHaveValue("TITLE");
+    expect(select).toHaveValue("title");
   });
 });

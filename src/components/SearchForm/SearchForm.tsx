@@ -1,17 +1,18 @@
-export interface SearchFormProps {
-    searchQuery: string;
-    onSearch: (searchQuery: string) => void;
-}
+import { useSearchParams } from "react-router-dom";
 
-function SearchForm(props: SearchFormProps) {
-  const { searchQuery, onSearch } = props;
-  
+function SearchForm() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const searchQuery = searchParams.get('query') ?? '';
+
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const FD =  new FormData(event.currentTarget);
     const data = Object.fromEntries(FD.entries());
-    onSearch(data.searchQuery as string);
+    
+    const newParams = new URLSearchParams(searchParams);
+    newParams.set('query', data.searchQuery as string);
+    setSearchParams(newParams);
   }
   
   return (

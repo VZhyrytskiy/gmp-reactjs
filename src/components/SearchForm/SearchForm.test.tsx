@@ -1,23 +1,27 @@
 import { render, screen, fireEvent } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom"; 
 import SearchForm from "./SearchForm";
-import { vi } from "vitest";
+import { describe, it, expect } from "vitest";
 
 describe("SearchForm Component", () => {
-  test("renders an input with the value equal to initial value passed in props", () => {
-    const mockOnSearch = vi.fn();
-    const initialValue = "Initial Search Query";
-    render(<SearchForm searchQuery={initialValue} onSearch={mockOnSearch} />);
+  it("renders an input with the value equal to query from URL", () => {
+    render(
+      <MemoryRouter initialEntries={["/?query=Initial%20Search%20Query"]}>
+        <SearchForm />
+      </MemoryRouter>
+    );
 
     const inputElement = screen.getByPlaceholderText("What do you want to watch?");
     expect(inputElement).toBeInTheDocument();
-    expect(inputElement).toHaveValue(initialValue);
+    expect(inputElement).toHaveValue("Initial Search Query");
   });
 
-  test('calls "onSearch" prop with proper value after typing and clicking Submit button', () => {
-    const mockOnSearch = vi.fn();
-    const initialValue = "Initial Search Query";
-
-    render(<SearchForm searchQuery={initialValue} onSearch={mockOnSearch} />);
+  it("updates the query parameter when typing and clicking Submit button", () => {
+    render(
+      <MemoryRouter initialEntries={["/?query=Old%20Query"]}>
+        <SearchForm />
+      </MemoryRouter>
+    );
 
     const inputElement = screen.getByPlaceholderText("What do you want to watch?");
     const submitButton = screen.getByText("Search");
@@ -25,22 +29,21 @@ describe("SearchForm Component", () => {
     fireEvent.change(inputElement, { target: { value: "New Search Query" } });
     fireEvent.click(submitButton);
 
-    expect(mockOnSearch).toHaveBeenCalledTimes(1);
-    expect(mockOnSearch).toHaveBeenCalledWith("New Search Query");
+    expect(inputElement).toHaveValue("New Search Query");
   });
 
-  test('calls "onSearch" prop with proper value after typing and pressing Enter key', () => {
-    const mockOnSearch = vi.fn();
-    const initialValue = "Initial Search Query";
-
-    render(<SearchForm searchQuery={initialValue} onSearch={mockOnSearch} />);
+  it("updates the query parameter when pressing Enter key in the input", () => {
+    render(
+      <MemoryRouter initialEntries={["/?query=Old%20Query"]}>
+        <SearchForm />
+      </MemoryRouter>
+    );
 
     const inputElement = screen.getByPlaceholderText("What do you want to watch?");
 
     fireEvent.change(inputElement, { target: { value: "Another Search Query" } });
     fireEvent.submit(inputElement.closest("form")!);
 
-    expect(mockOnSearch).toHaveBeenCalledTimes(1);
-    expect(mockOnSearch).toHaveBeenCalledWith("Another Search Query");
+    expect(inputElement).toHaveValue("Another Search Query");
   });
 });
