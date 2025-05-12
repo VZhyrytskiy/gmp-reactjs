@@ -7,7 +7,8 @@ export interface MovieTileProps {
 }
 
 function MovieTile(props: MovieTileProps) {
-    const {movie: {poster_path, title, release_date, genres, id}} = props;
+    const { movie } = props;
+    const { poster_path, title, release_date, genres, id } = movie;
 
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
@@ -17,6 +18,9 @@ function MovieTile(props: MovieTileProps) {
         console.log(message);
         if (detailsRef.current) {
             detailsRef.current.open = false; 
+        }
+        if (message === 'Edit') {
+            navigate(`/${id}/edit`, { state: { movie, searchParams: searchParams.toString() } });
         }
     };
 

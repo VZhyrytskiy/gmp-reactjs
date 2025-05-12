@@ -1,4 +1,4 @@
-import { useSearchParams } from "react-router-dom";
+import { Link, Outlet, useSearchParams } from "react-router-dom";
 
 function SearchForm() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -14,10 +14,16 @@ function SearchForm() {
     newParams.set('query', data.searchQuery as string);
     setSearchParams(newParams);
   }
-  
+
   return (
     <>
-      <h1 className="bg-dark-gray text-white uppercase text-5xl p-8">find your movie</h1>
+      <div className="bg-dark-gray flex flex-row justify-between">
+        <h1 className="text-white uppercase text-5xl p-8">find your movie</h1>
+        <Link to="/new" className="text-lg cursor-pointer w-[182px] h-[44px] bg-red-accent p-2 rounded uppercase mr-8 mt-8 text-center">
+            Add New Movie
+        </Link>
+      </div>
+      <Outlet />
       <form onSubmit={onSubmit} className="bg-dark-gray flex gap-4 p-8 justify-left" >
           <input 
               id="searchQuery"

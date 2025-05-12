@@ -18,7 +18,7 @@ function Dialog(props: PropsWithChildren<DialogProps>) {
             */}
             {createPortal(
                 <FocusTrap>
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+                <div className="fixed inset-0 flex justify-center items-center z-50">
                     <div className="bg-dark-gray rounded-lg p-8 shadow-lg text-white">
                         {/* HEADER */}
                         <div className="flex justify-between items-center text-4xl mb-3 uppercase">

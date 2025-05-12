@@ -1,5 +1,5 @@
 export interface Movie {
-    id: number;
+    id?: number;
     poster_path: string;
     title: string;
     release_date: string;
